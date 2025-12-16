@@ -15,7 +15,8 @@ app.use(cors());
 app.use(express.json());
 app.use(logger);
 
-app.use(notesRoutes);
+// app.use(notesRoutes);
+app.use('/notes', notesRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
