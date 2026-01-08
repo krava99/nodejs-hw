@@ -27,12 +27,12 @@ userSchema.pre('save', function () {
   if (!this.username) {
     this.username = this.email;
   }
-
-  userSchema.method.toJSON = function () {
-    const Obj = this.toObject();
-    delete Obj.password;
-    return Obj;
-  };
 });
+
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
 
 export const User = model('User', userSchema);
