@@ -123,6 +123,7 @@ export const requestResetEmail = async (req, res, next) => {
     next(
       createHttpError(500, 'Failed to send the email, please try again later.'),
     );
+    return;
   }
 
   res.status(200).json({
@@ -141,9 +142,10 @@ export const resetPassword = async (req, res, next) => {
     return;
   }
 
-  const user = await User.findOne({ email: payload.email, sub: payload.id });
+  const user = await User.findOne({ _id: payload.sub, email: payload.email });
   if (!user) {
     next(createHttpError(404, 'User not found'));
+    return;
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
